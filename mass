@@ -1,0 +1,31 @@
+import discord
+from discord.ext import commands
+
+TOKEN = "YOUR_BOT_TOKEN"
+OWNER_ID = 123456789012345678
+
+intents = discord.Intents.default()
+intents.message_content = True
+intents.guilds = True
+
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"Logged in as {bot.user}")
+
+@bot.command()
+async def announce(ctx, *, message):
+    if ctx.author.id != OWNER_ID:
+        return
+
+    for channel in ctx.guild.text_channels:
+        try:
+            await channel.send(f"📢 {message}")
+            break
+        except:
+            pass
+
+    await ctx.send("Announcement sent.")
+
+bot.run(TOKEN)
