@@ -29,3 +29,4 @@ async def announce(ctx, *, message):
     await ctx.send("Announcement sent.")
 
 bot.run(TOKEN)
+pip install discord.py
